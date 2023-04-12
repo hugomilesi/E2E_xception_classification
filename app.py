@@ -1,5 +1,4 @@
 from flask import Flask,flash, render_template, request, redirect, url_for
-from flask_pure import Pure
 from werkzeug.utils import secure_filename
 import os
 import tensorflow as tf
@@ -9,7 +8,6 @@ UPLOAD_FOLDER = 'static/img/'
 app = Flask(__name__)
 app.secret_key = 'hugomilesi'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-Pure(app)
 
 ALLOWED_EXTENSIONS = set(['jpeg', 'png', 'jpg'])
 
