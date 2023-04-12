@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Tutorial</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <h1 class = "text-center">Coffee Beans Classifier</h1>
+        <br><br>
+        <h3 class= 'text-center'>Brief description</h3>
+        <div style = 'text-align:center'>
+            <ul style = 'display:inline-block; text-align:left'>
+                <li>The model was trained to classify 4 different roast types of coffee beans: green, ligh, medium and dark. </li>
+                <li>To use it, just upload an image of a coffee bean you want.</li>
+                <li>just image files will work(jpg, png, jpeg).
+            </ul>
+            <p style = 'border:2px dashed crimson; border-radius: 5px; display:inline-block; text-align:center '><strong style = 'color:crimson'>PROTIP:</strong> To increase sucess chance on classifying the right bean type, go for single coffee bean images!</p>
+        </div>
+
+
+
+        <p>
+            {%with messages = get_flashed_messages()%}
+                {%if messages%}
+                    <ul>
+                        {%for message in messages%}
+                            <li>{{message}}</li>
+                        {%endfor%}
+                    </ul>
+                {%endif%}
+            {% endwith %}
+        </p>
+
+        <form class = "p-3 text-center" action = "/", method = "post" enctype = "multipart/form-data">
+            <input class = "form-control" type ="file" name = "file">
+            <input class = "btn btn-primary mt-3" type = "submit" value = "Predict Image">
+        </form>
+
+        {% if filename %}
+                <div class = 'text-center'>
+                    <p class = 'text-center'>Preview image {{filename}}</p>
+                    <img src = "{{url_for('display_image', filename = filename)}}">
+                </div>
+        {% endif %}
+
+        {% if prediction %}
+            <h2 class = "text-center">Roast factor of current image: {{prediction}} roasted.</h2>
+        {% endif %}
+    </body>
+</html>
