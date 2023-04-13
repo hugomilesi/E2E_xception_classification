@@ -66,4 +66,4 @@ if __name__ == '__main__':
     app.run(port = 3000, debug = True)
 
 
-#gunicorn app:app -b :8080 --timeout 120 --workers=3 --threads=3 --worker-connections=1000
+#gunicorn app:app -b :8080 --timeout 500 --workers=3 --threads=3 --worker-connections=1000
