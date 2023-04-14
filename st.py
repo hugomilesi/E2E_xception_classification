@@ -12,6 +12,17 @@ MODEL_PATH = 'model/saved_model'
 
 st.set_option('deprecation.showfileUploaderEncoding', False)
 st.title('Coffee Bean Classifier')
+st.markdown("""
+            ## How it Works
+            - The model was for classifying 4 different roast types of coffee beans: green, light, medium and dark.
+            - To use it, just copy the image link of a coffee bean you want.
+            - just image files will work(jpg, png, jpeg).
+            
+            
+            **:red[PROTIP:]** To increase sucess chance on classifying the right bean type, go for single coffee bean images!
+        
+            """)
+
 st.text('Please provide a coffee bean image link like the placeholder below.')
 
 @st.cache_data # for faster loading
@@ -54,10 +65,13 @@ path = st.text_input('Placeholder image link:.', 'https://thumbs.dreamstime.com/
 if path is not None:
   content = requests.get(path).content
 
-st.write('Predicted Class: ')
-with st.spinner('Classifying...'):
-  label = np.argmax(model.predict(decode_img(content)), axis = 1)
-  st.write(classes[label[0]])
-st.write("")
-image = Image.open(BytesIO(content))
-st.image(image, caption = 'Classyfying coffee bean image', use_column_width = True)
+try:
+  st.write('Predicted Class: ')
+  with st.spinner('Classifying...'):
+    label = np.argmax(model.predict(decode_img(content)), axis = 1)
+    st.write(classes[label[0]])
+  st.write("")
+  image = Image.open(BytesIO(content))
+  st.image(image, caption = 'Classyfying coffee bean image', use_column_width = True)
+except ValueError:
+  st.text('Invalid link format =(. Try choosing another image.')
